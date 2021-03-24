@@ -4,7 +4,8 @@ import time
 import requests
 
 
-API_KEY = '1702676070:AAHhPM13I4CToK2iq8R23tEpwY2u-ESrEwU'
+API_KEY = '1612485448:AAEw2n-qtfg_V-LniRBQzRWyNKgLQHOOAmE'
+CHAT_NAME = "shortlongsig"
 
 Future_coins = ["BTCUSDTPERP", "ETHUSDTPERP", "XRPUSDTPERP", "ONEUSDTPERP", "BNBUSDTPERP", "ADAUSDTPERP", "THETAUSDTPERP", "DOTUSDTPERP",
 "TRXUSDTPERP", "LTCUSDTPERP", "UNIUSDTPERP","CHZUSDTPERP", "VETUSDTPERP", "SXPUSDTPERP", "EOSUSDTPERP", "XLMUSDTPERP", "AVAXUSDTPERP",
@@ -20,8 +21,7 @@ Future_coins = ["BTCUSDTPERP", "ETHUSDTPERP", "XRPUSDTPERP", "ONEUSDTPERP", "BNB
 "DEFIUSDTPERP"] 
 
 
-Future_coins_test = ["BTCUSDTPERP", "ETHUSDTPERP", "XRPUSDTPERP", "ONEUSDTPERP", "BNBUSDTPERP", "ADAUSDTPERP", "THETAUSDTPERP", "DOTUSDTPERP",
-"TRXUSDTPERP"] 
+Future_coins_test = ["BTCUSDTPERP", "ETHUSDTPERP", "XRPUSDTPERP", "ONEUSDTPERP", "BNBUSDTPERP", "ADAUSDTPERP"] 
 
 
 
@@ -90,8 +90,8 @@ def main():
         out_coins_short = []
         exeptions = 0
         for coin in Future_coins:
-            # print(coin)
-            print(1)
+            print(coin)
+            # print(1)
             handler = TA_Handler(
                 symbol=coin,
                 screener="crypto",
@@ -104,17 +104,15 @@ def main():
                     out_coins_long.append(coin)
                 if analysis.indicators["EMA10"] < analysis.indicators["EMA20"] and pre_dict[coin].lastmore():
                     out_coins_short.append(coin)
-                # if yet15 == True:
-                pre_dict[coin].add2EMA10(analysis.indicators["EMA10"])
-                pre_dict[coin].add2EMA20(analysis.indicators["EMA20"])
-                #     yet15 = False
-                # else:
-                #     yet15 = True
+                if yet15 == True:
+                    pre_dict[coin].add2EMA10(analysis.indicators["EMA10"])
+                    pre_dict[coin].add2EMA20(analysis.indicators["EMA20"])
                 time.sleep(1)
             except:
                 print("exept   " + coin)
                 exeptions += 1
 
+        yet15 != yet15
         print(exeptions)
         strshort = "short\n"
         for coin_sh in out_coins_short:
@@ -123,10 +121,12 @@ def main():
         for coin_l in out_coins_long:
             strlong = strlong + coin_l + "\n"
         out = strlong + strshort
-        url = "https://api.telegram.org/bot1702676070:AAHhPM13I4CToK2iq8R23tEpwY2u-ESrEwU/sendMessage?chat_id=@fireborntest&text=" + out
-        requests.post(url)
+        if len(out_coins_short) > 0 or len(out_coins_long) > 0:
+            url = "https://api.telegram.org/bot"+API_KEY+"/sendMessage?chat_id=@"+CHAT_NAME+"&text=" + out
+            requests.post(url)
         end = time.time()
-        # time.sleep(450-end+start)
+        if 450 > (end-start):
+            time.sleep(450-end+start)
         
 
 
@@ -134,3 +134,4 @@ def main():
 
 if __name__ == "__main__":
 	main()
+
