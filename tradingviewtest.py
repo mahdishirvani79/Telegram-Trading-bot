@@ -127,6 +127,7 @@ def main():
             url = "https://api.telegram.org/bot"+API_KEY+"/sendMessage?chat_id=@"+CHAT_NAME+"&text=" + out
             requests.post(url)
         end = time.time()
+        print(end-start)
         if 450 > (end-start):
             time.sleep(450-end+start)
         
