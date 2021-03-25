@@ -89,7 +89,7 @@ def main():
         out_coins_long = []
         out_coins_short = []
         exeptions = 0
-        for coin in Future_coins_test:
+        for coin in Future_coins:
             print(coin)
             # print(1)
             handler = TA_Handler(
