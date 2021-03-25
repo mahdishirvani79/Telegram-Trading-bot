@@ -89,7 +89,7 @@ def main():
         out_coins_long = []
         out_coins_short = []
         exeptions = 0
-        for coin in Future_coins:
+        for coin in Future_coins_test:
             print(coin)
             # print(1)
             handler = TA_Handler(
@@ -111,8 +111,10 @@ def main():
             except:
                 print("exept   " + coin)
                 exeptions += 1
-
-        yet15 != yet15
+        if yet15 == False:
+            yet15 = True
+        else:
+            yet15 = False
         print(exeptions)
         strshort = "short\n"
         for coin_sh in out_coins_short:
