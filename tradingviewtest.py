@@ -81,7 +81,7 @@ class out_coins:
 
 def main():
     pre_dict = dict() 
-    yet15 = False
+    yet15 = 0
     for coin in Future_coins:
         pre_dict[coin] = out_coins(coin)
     while(True):
@@ -96,7 +96,7 @@ def main():
                 symbol=coin,
                 screener="crypto",
                 exchange="binance",
-                interval=Interval.INTERVAL_15_MINUTES
+                interval=Interval.INTERVAL_1_HOUR
             )
             try:
                 analysis = handler.get_analysis()
@@ -104,17 +104,17 @@ def main():
                     out_coins_long.append(coin)
                 if analysis.indicators["EMA10"] < analysis.indicators["EMA20"] and pre_dict[coin].lastmore():
                     out_coins_short.append(coin)
-                if yet15 == True:
+                if yet15 == 7:
                     pre_dict[coin].add2EMA10(analysis.indicators["EMA10"])
                     pre_dict[coin].add2EMA20(analysis.indicators["EMA20"])
                 time.sleep(1)
             except:
                 print("exept   " + coin)
                 exeptions += 1
-        if yet15 == False:
-            yet15 = True
-        else:
-            yet15 = False
+        if yet15 == 7:
+            yet15 = 0
+        elif yet15 < 7:
+            yet15 = yet15 + 1
         print(exeptions)
         strshort = "short\n"
         for coin_sh in out_coins_short:
